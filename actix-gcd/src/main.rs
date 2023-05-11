@@ -5,6 +5,7 @@ fn main() {
         App::new()
             .route("/", web::get().to(get_index))
             .route("/gcd", web::post().to(post_gcd))
+            .route("/std", web::post().to(post_std))
     });
 
     println!("Serving on http://localhost:3000...");
@@ -27,7 +28,7 @@ fn get_index() -> HttpResponse {
             <br>
             <form action="/std" method="post">
             <input type="file", name="sample"/>
-            <button type="submit">Compute Standard DeviationD</button>
+            <button type="submit">Compute Standard Deviation</button>
         "#,
     )
 }
@@ -68,4 +69,21 @@ fn gcd(mut n: u64, mut m: u64) -> u64 {
         m = m % n
     }
     n
+}
+
+fn post_std() -> HttpResponse {
+    let result = 2.5;
+    let response = format!("The standard deviation is {}", result);
+
+    HttpResponse::Ok().content_type("text/html").body(response)
+}
+
+fn mean(data: &[i32]) -> Option<f32> {
+    let sum = data.iter().sum::<i32>() as f32;
+    let count = data.len();
+
+    match count {
+        positive if positive > 0 => Some(sum / count as f32),
+        _ => None,
+    }
 }
