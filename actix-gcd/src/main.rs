@@ -24,6 +24,10 @@ fn get_index() -> HttpResponse {
             <input type="text" name="m"/>
             <button type="submit">Compute GCD</button>
             </form>
+            <br>
+            <form action="/std" method="post">
+            <input type="file", name="sample"/>
+            <button type="submit">Compute Standard DeviationD</button>
         "#,
     )
 }
