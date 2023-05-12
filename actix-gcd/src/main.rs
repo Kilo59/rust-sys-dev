@@ -29,8 +29,8 @@ fn get_index() -> HttpResponse {
             </form>
             <br>
             <form action="/std" method="post">
-            <input type="file", name="CSV File"/>
             <input type="text", name="header"/>
+            <input type="file", name="CSV File"/>
             <button type="submit">Compute Standard Deviation</button>
         "#,
     )
@@ -75,8 +75,9 @@ fn gcd(mut n: u64, mut m: u64) -> u64 {
 }
 
 fn post_std() -> HttpResponse {
-    let result = 2.5;
-    let response = format!("The standard deviation is {}", result);
+    // TODO: extract data from form file
+    let result = std_deviation(&[1, 3, 5, 2, 6, 8]).expect("Could not compute");
+    let response = format!("The standard deviation is <b>{}</b>", result);
 
     HttpResponse::Ok().content_type("text/html").body(response)
 }
@@ -87,6 +88,25 @@ fn mean(data: &[i32]) -> Option<f32> {
 
     match count {
         positive if positive > 0 => Some(sum / count as f32),
+        _ => None,
+    }
+}
+
+fn std_deviation(data: &[i32]) -> Option<f32> {
+    match (mean(data), data.len()) {
+        (Some(data_mean), count) if count > 0 => {
+            let variance = data
+                .iter()
+                .map(|value| {
+                    let diff = data_mean - (*value as f32);
+
+                    diff * diff
+                })
+                .sum::<f32>()
+                / count as f32;
+
+            Some(variance.sqrt())
+        }
         _ => None,
     }
 }
