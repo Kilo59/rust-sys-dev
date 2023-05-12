@@ -1,4 +1,5 @@
 use actix_web::{web, App, HttpResponse, HttpServer};
+use std::process;
 
 fn main() {
     let server = HttpServer::new(|| {
@@ -14,6 +15,7 @@ fn main() {
         .expect("error binding server to address")
         .run()
         .expect("error running server");
+    println!("pid is {}", process::id());
 }
 
 fn get_index() -> HttpResponse {
