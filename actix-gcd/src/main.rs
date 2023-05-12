@@ -9,13 +9,13 @@ fn main() {
             .route("/std", web::post().to(post_std))
     });
 
+    println!("pid is {}", process::id());
     println!("Serving on http://localhost:3000...");
     server
         .bind("127.0.0.1:3000")
         .expect("error binding server to address")
         .run()
         .expect("error running server");
-    println!("pid is {}", process::id());
 }
 
 fn get_index() -> HttpResponse {
