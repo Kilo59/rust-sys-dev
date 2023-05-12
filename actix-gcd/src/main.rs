@@ -29,7 +29,8 @@ fn get_index() -> HttpResponse {
             </form>
             <br>
             <form action="/std" method="post">
-            <input type="file", name="sample"/>
+            <input type="file", name="CSV File"/>
+            <input type="text", name="header"/>
             <button type="submit">Compute Standard Deviation</button>
         "#,
     )
